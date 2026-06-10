@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PB Bach Party — July 23–27</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --sand: #f5ede0;
+      --ocean: #0a4f6e;
+      --sky: #5bb8d4;
+      --coral: #e8603c;
+      --foam: #d6eef5;
+      --dark: #0d1f2d;
+      --gold: #f0b429;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--dark);
+      color: var(--sand);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      padding: 2rem;
+      background: linear-gradient(170deg, #0d1f2d 0%, #0a4f6e 60%, #1a7a9c 100%);
+    }
+
+    /* animated wave layers */
+    .wave-container {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 200px;
+      pointer-events: none;
+    }
+    .wave {
+      position: absolute;
+      bottom: 0;
+      left: -100%;
+      width: 300%;
+      height: 100%;
+    }
+    .wave svg { width: 100%; height: 100%; }
+    .wave-1 { animation: wave-move 8s linear infinite; opacity: 0.4; }
+    .wave-2 { animation: wave-move 12s linear infinite reverse; opacity: 0.25; bottom: 10px; }
+    .wave-3 { animation: wave-move 6s linear infinite; opacity: 0.15; bottom: 20px; }
+
+    @keyframes wave-move {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(33.33%); }
+    }
+
+    /* sun */
+    .sun {
+      position: absolute;
+      top: 60px;
+      right: 12%;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ffd166 0%, #f0b429 50%, #e85d04 100%);
+      box-shadow: 0 0 60px 20px rgba(240,180,41,0.35), 0 0 120px 40px rgba(240,180,41,0.15);
+      animation: pulse-sun 4s ease-in-out infinite;
+    }
+    @keyframes pulse-sun {
+      0%, 100% { box-shadow: 0 0 60px 20px rgba(240,180,41,0.35), 0 0 120px 40px rgba(240,180,41,0.15); }
+      50%       { box-shadow: 0 0 80px 30px rgba(240,180,41,0.5),  0 0 160px 60px rgba(240,180,41,0.2); }
+    }
+
+    .hero-eyebrow {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--sky);
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: fade-up 0.8s 0.2s forwards;
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(5rem, 16vw, 13rem);
+      line-height: 0.88;
+      letter-spacing: 0.01em;
+      color: var(--sand);
+      opacity: 0;
+      animation: fade-up 0.8s 0.4s forwards;
+    }
+    .hero-title span { color: var(--coral); }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      font-weight: 300;
+      color: var(--foam);
+      margin-top: 1.5rem;
+      letter-spacing: 0.05em;
+      opacity: 0;
+      animation: fade-up 0.8s 0.6s forwards;
+    }
+
+    .hero-dates {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 0.6rem 2rem;
+      border: 1px solid var(--sky);
+      border-radius: 100px;
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--sky);
+      opacity: 0;
+      animation: fade-up 0.8s 0.8s forwards;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 220px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      opacity: 0;
+      animation: fade-up 0.8s 1.2s forwards;
+    }
+    .scroll-hint span {
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--sky);
+    }
+    .scroll-arrow {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--sky), transparent);
+      animation: bounce-arrow 1.5s ease-in-out infinite;
+    }
+    @keyframes bounce-arrow {
+      0%, 100% { transform: scaleY(1); opacity: 1; }
+      50%       { transform: scaleY(0.6); opacity: 0.4; }
+    }
+
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SECTION SHARED ── */
+    section {
+      padding: 5rem 1.5rem;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--coral);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      line-height: 1;
+      color: var(--sand);
+      margin-bottom: 2.5rem;
+    }
+
+    /* ── DAYS ── */
+    .days { max-width: 860px; }
+
+    .day-card {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 0 2rem;
+      margin-bottom: 3rem;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .day-card.visible { opacity: 1; transform: translateY(0); }
+
+    .day-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 4.5rem;
+      line-height: 1;
+      color: var(--ocean);
+      text-align: right;
+      padding-top: 2px;
+      position: relative;
+    }
+    .day-number::after {
+      content: '';
+      position: absolute;
+      right: -1rem;
+      top: 0.3rem;
+      bottom: 0.3rem;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--coral), transparent);
+    }
+
+    .day-content { padding-left: 1rem; }
+
+    .day-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      letter-spacing: 0.05em;
+      color: var(--sand);
+      margin-bottom: 0.2rem;
+    }
+    .day-date {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--sky);
+      margin-bottom: 1rem;
+    }
+
+    .activity {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+    .activity-icon {
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .activity-text {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: rgba(245,237,224,0.85);
+    }
+    .activity-text strong {
+      color: var(--sand);
+      font-weight: 500;
+    }
+    .activity-note {
+      font-size: 0.78rem;
+      color: var(--sky);
+      margin-top: 0.2rem;
+    }
+
+    /* ── DIVIDER ── */
+    .wave-divider {
+      width: 100%;
+      overflow: hidden;
+      line-height: 0;
+      background: var(--dark);
+    }
+    .wave-divider svg { display: block; }
+
+    /* ── TO-DO SECTION ── */
+    .todo-section {
+      background: linear-gradient(135deg, #0a2a3d 0%, #0d1f2d 100%);
+      padding: 5rem 1.5rem;
+    }
+    .todo-inner {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .todo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+
+    .todo-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(91,184,212,0.15);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      transition: border-color 0.3s, background 0.3s;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.3s, background 0.3s;
+    }
+    .todo-card:hover {
+      border-color: rgba(91,184,212,0.4);
+      background: rgba(255,255,255,0.07);
+    }
+    .todo-card.visible { opacity: 1; transform: translateY(0); }
+
+    .todo-icon { font-size: 1.5rem; margin-bottom: 0.6rem; }
+    .todo-name {
+      font-weight: 500;
+      font-size: 0.95rem;
+      color: var(--sand);
+      margin-bottom: 0.4rem;
+    }
+    .todo-detail {
+      font-size: 0.8rem;
+      color: rgba(245,237,224,0.55);
+      line-height: 1.5;
+    }
+    .todo-detail .price {
+      color: var(--gold);
+      font-weight: 500;
+    }
+    .todo-status {
+      display: inline-block;
+      margin-top: 0.6rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+      border-radius: 100px;
+    }
+    .todo-status.booked {
+      background: rgba(91,184,212,0.15);
+      color: var(--sky);
+      border: 1px solid rgba(91,184,212,0.3);
+    }
+    .todo-status.pending {
+      background: rgba(232,96,60,0.12);
+      color: var(--coral);
+      border: 1px solid rgba(232,96,60,0.3);
+    }
+    .todo-status.tbd {
+      background: rgba(240,180,41,0.12);
+      color: var(--gold);
+      border: 1px solid rgba(240,180,41,0.3);
+    }
+
+    /* ── CREW SECTION ── */
+    .crew-section {
+      padding: 5rem 1.5rem;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .crew-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+
+    .crew-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(245,237,224,0.08);
+      border-radius: 14px;
+      padding: 1.4rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.3s, background 0.3s;
+    }
+    .crew-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--coral), var(--sky));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .crew-card:hover {
+      border-color: rgba(245,237,224,0.15);
+      background: rgba(255,255,255,0.06);
+    }
+    .crew-card:hover::before { opacity: 1; }
+    .crew-card.visible { opacity: 1; transform: translateY(0); }
+
+    .crew-nickname {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      color: var(--coral);
+      letter-spacing: 0.05em;
+      margin-bottom: 0.15rem;
+    }
+    .crew-name {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--sand);
+      margin-bottom: 0.8rem;
+      letter-spacing: 0.03em;
+    }
+    .crew-contact {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .crew-contact a {
+      font-size: 0.78rem;
+      color: rgba(245,237,224,0.45);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: color 0.2s;
+    }
+    .crew-contact a:hover { color: var(--sky); }
+    .crew-contact .contact-icon { font-size: 0.85rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 3rem 1rem 4rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(245,237,224,0.2);
+    }
+    footer span { color: var(--coral); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 500px) {
+      .day-card { grid-template-columns: 52px 1fr; gap: 0 1rem; }
+      .day-number { font-size: 3rem; }
+      .day-number::after { right: -0.5rem; }
+      .sun { width: 80px; height: 80px; top: 40px; right: 6%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="sun"></div>
+    <p class="hero-eyebrow">Pacific Beach, San Diego</p>
+    <h1 class="hero-title">BACH<br><span>PARTY</span></h1>
+    <p class="hero-sub">Five days. Sun, surf, and shenanigans.</p>
+    <div class="hero-dates">July 23 – 27, 2026</div>
+    <div class="scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-arrow"></div>
+    </div>
+    <!-- Waves -->
+    <div class="wave-container">
+      <div class="wave wave-1">
+        <svg viewBox="0 0 1200 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0,60 C200,120 400,0 600,60 C800,120 1000,0 1200,60 L1200,120 L0,120 Z" fill="rgba(91,184,212,0.3)"/>
+        </svg>
+      </div>
+      <div class="wave wave-2">
+        <svg viewBox="0 0 1200 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0,40 C150,90 350,10 600,50 C850,90 1050,10 1200,50 L1200,120 L0,120 Z" fill="rgba(10,79,110,0.5)"/>
+        </svg>
+      </div>
+      <div class="wave wave-3">
+        <svg viewBox="0 0 1200 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0,80 C300,20 600,100 900,30 C1050,0 1150,70 1200,80 L1200,120 L0,120 Z" fill="rgba(13,31,45,0.8)"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- ITINERARY -->
+  <section class="days">
+    <p class="section-label">The Plan</p>
+    <h2 class="section-title">Itinerary</h2>
+
+    <!-- Day 1 -->
+    <div class="day-card">
+      <div class="day-number">01</div>
+      <div class="day-content">
+        <div class="day-title">Arrival Day</div>
+        <div class="day-date">Thursday · July 23</div>
+        <div class="activity">
+          <span class="activity-icon">🏡</span>
+          <div class="activity-text"><strong>Check in</strong> to the Airbnb near Tourmaline Surf Park</div>
+        </div>
+        <div class="activity">
+          <span class="activity-icon">🍹</span>
+          <div class="activity-text"><strong>JRDN rooftop bar</strong> at Tower23 Hotel — kick things off right with ocean views</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Day 2 -->
+    <div class="day-card">
+      <div class="day-number">02</div>
+      <div class="day-content">
+        <div class="day-title">Beach Day</div>
+        <div class="day-date">Friday · July 24</div>
+        <div class="activity">
+          <span class="activity-icon">🏄</span>
+          <div class="activity-text"><strong>Morning surf</strong> at Tourmaline Surf Park — right out the door</div>
+        </div>
+        <div class="activity">
+          <span class="activity-icon">☀️</span>
+          <div class="activity-text"><strong>Beach setup</strong> — chairs, cooler, recover, eat</div>
+        </div>
+        <div class="activity">
+          <span class="activity-icon">🍺</span>
+          <div class="activity-text"><strong>Garnet Ave bar crawl</strong> — the big nightlife night
+            <div class="activity-note">Firehouse · Bub's · Typhoon Saloon · The Waterfront</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Day 3 -->
+    <div class="day-card">
+      <div class="day-number">03</div>
+      <div class="day-content">
+        <div class="day-title">The Big Day</div>
+        <div class="day-date">Saturday · July 25</div>
+        <div class="activity">
+          <span class="activity-icon">🏄</span>
+          <div class="activity-text"><strong>Surf round 2</strong> at Tourmaline</div>
+        </div>
+        <div class="activity">
+          <span class="activity-icon">⚡</span>
+          <div class="activity-text"><strong>Jet skis OR Duffy electric boat</strong> on Mission Bay
+            <div class="activity-note">TBD on budget — book the 1–2pm slot</div>
+          </div>
+        </div>
+        <div class="activity">
+          <span class="activity-icon">⚽</span>
+          <div class="activity-text"><strong>San Diego FC vs FC Dallas</strong> — Snapdragon Stadium, 6:30pm</div>
+        </div>
+        <div class="activity">
+          <span class="activity-icon">🌙</span>
+          <div class="activity-text"><strong>After:</strong> bars near the stadium or back to PB</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Day 4 -->
+    <div class="day-card">
+      <div class="day-number">04</div>
+      <div class="day-content">
+        <div class="day-title">Recovery / Adventure</div>
+        <div class="day-date">Sunday · July 26</div>
+        <div class="activity">
+          <span class="activity-icon">🏄</span>
+          <div class="activity-text"><strong>Lighter surf</strong> at Tourmaline or just beach time</div>
+        </div>
+        <div class="activity">
+          <span class="activity-icon">🎣</span>
+          <div class="activity-text"><strong>Deep sea fishing charter</strong> out of Point Loma
+            <div class="activity-note">Or chill beach day depending on energy levels</div>
+          </div>
+        </div>
+        <div class="activity">
+          <span class="activity-icon">🍽️</span>
+          <div class="activity-text"><strong>Group dinner</strong> — nice spot, early-ish</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Day 5 -->
+    <div class="day-card">
+      <div class="day-number">05</div>
+      <div class="day-content">
+        <div class="day-title">Last Morning</div>
+        <div class="day-date">Monday · July 27</div>
+        <div class="activity">
+          <span class="activity-icon">🏄</span>
+          <div class="activity-text"><strong>Final surf session</strong> at Tourmaline before checkout</div>
+        </div>
+        <div class="activity">
+          <span class="activity-icon">✌️</span>
+          <div class="activity-text"><strong>Safe travels</strong> — see you on the other side</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TO-DO -->
+  <div class="todo-section">
+    <div class="todo-inner">
+      <p class="section-label">Action Items</p>
+      <h2 class="section-title">Still to Book</h2>
+      <div class="todo-grid">
+
+        <div class="todo-card">
+          <div class="todo-icon">🏡</div>
+          <div class="todo-name">Airbnb</div>
+          <div class="todo-detail">Near Tourmaline Surf Park, PB</div>
+          <span class="todo-status booked">✓ Booked</span>
+        </div>
+
+        <div class="todo-card">
+          <div class="todo-icon">⚡</div>
+          <div class="todo-name">Jet Skis or Duffy Boat</div>
+          <div class="todo-detail">
+            Jet skis: <span class="price">~$130/hr per ski</span> + 20% fees<br>
+            Duffy boat: <span class="price">from ~$247/group</span> for 1.5 hrs, BYOB, holds up to 10
+          </div>
+          <span class="todo-status tbd">TBD — budget</span>
+        </div>
+
+        <div class="todo-card">
+          <div class="todo-icon">⚽</div>
+          <div class="todo-name">SDFC Tickets</div>
+          <div class="todo-detail">San Diego FC vs FC Dallas<br>Snapdragon Stadium · Jul 25 · 6:30pm<br><span class="price">From $40/person</span></div>
+          <span class="todo-status pending">Book Now</span>
+        </div>
+
+        <div class="todo-card">
+          <div class="todo-icon">🍹</div>
+          <div class="todo-name">JRDN Rooftop</div>
+          <div class="todo-detail">Tower23 Hotel, Pacific Beach<br>Thursday night reservation</div>
+          <span class="todo-status pending">Reserve</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- CREW -->
+  <section class="crew-section">
+    <p class="section-label">The Squad</p>
+    <h2 class="section-title">The Crew</h2>
+    <div class="crew-grid">
+
+      <div class="crew-card">
+        <div class="crew-nickname">Best Daddy</div>
+        <div class="crew-name">Alex Eisner</div>
+        <div class="crew-contact">
+          <a href="tel:9167054527"><span class="contact-icon">📞</span> (916) 705-4527</a>
+          <a href="mailto:alex.eisner@gmail.com"><span class="contact-icon">✉️</span> alex.eisner@gmail.com</a>
+        </div>
+      </div>
+
+      <div class="crew-card">
+        <div class="crew-nickname">Sassy Daddy</div>
+        <div class="crew-name">Brian Rasmussen</div>
+        <div class="crew-contact">
+          <a href="tel:9162033642"><span class="contact-icon">📞</span> (916) 203-3642</a>
+          <a href="mailto:Brian.ras@gmail.com"><span class="contact-icon">✉️</span> Brian.ras@gmail.com</a>
+        </div>
+      </div>
+
+      <div class="crew-card">
+        <div class="crew-nickname">Danger Daddy</div>
+        <div class="crew-name">Chase Vogel</div>
+        <div class="crew-contact">
+          <a href="tel:9168470319"><span class="contact-icon">📞</span> (916) 847-0319</a>
+          <a href="mailto:chasevogel22@yahoo.com"><span class="contact-icon">✉️</span> chasevogel22@yahoo.com</a>
+        </div>
+      </div>
+
+      <div class="crew-card">
+        <div class="crew-nickname">Bear</div>
+        <div class="crew-name">Jameze Hal</div>
+        <div class="crew-contact">
+          <a href="tel:5109887870"><span class="contact-icon">📞</span> (510) 988-7870</a>
+          <a href="mailto:Jamezehal@gmail.com"><span class="contact-icon">✉️</span> Jamezehal@gmail.com</a>
+        </div>
+      </div>
+
+      <div class="crew-card">
+        <div class="crew-nickname">Twink ✨</div>
+        <div class="crew-name">Vince Chee</div>
+        <div class="crew-contact">
+          <a href="tel:6503033872"><span class="contact-icon">📞</span> (650) 303-3872</a>
+          <a href="mailto:vincehc.chee@gmail.com"><span class="contact-icon">✉️</span> vincehc.chee@gmail.com</a>
+        </div>
+      </div>
+
+      <div class="crew-card">
+        <div class="crew-nickname">Safety Daddy</div>
+        <div class="crew-name">Ryan Hatfield</div>
+        <div class="crew-contact">
+          <a href="tel:9163424332"><span class="contact-icon">📞</span> (916) 342-4332</a>
+          <a href="mailto:hatfield.ry@gmail.com"><span class="contact-icon">✉️</span> hatfield.ry@gmail.com</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <p>Pacific Beach · <span>July 2026</span> · Let's gooo 🤙</p>
+  </footer>
+
+  <script>
+    // scroll-triggered fade-in
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.day-card, .todo-card, .crew-card').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
